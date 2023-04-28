@@ -13,19 +13,19 @@ namespace CityInfo.API.Services
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public Task AddPointOfInterestForCityAsync(int cityId, PointOfInterest pointOfInterest)
+        public async Task AddPointOfInterestForCityAsync(int cityId, PointOfInterest pointOfInterest)
         {
-            throw new NotImplementedException();
-        }
+            var city = await GetCityAsync(cityId, false);
+            if (city != null)
+            {
+                city.PointsOfInterest.Add(pointOfInterest);
+            }
 
-        public Task<bool> CityExistsAsync(int cityId)
-        {
-            throw new NotImplementedException();
         }
 
         public void DeletePointOfInterest(PointOfInterest pointOfInterest)
         {
-            throw new NotImplementedException();
+            _context.PointsOfInterests.Remove(pointOfInterest);
         }
 
         public async Task<IEnumerable<City>> GetCitiesAsync()
@@ -42,6 +42,11 @@ namespace CityInfo.API.Services
             return await _context.Cities.Where(c => c.Id == cityId).FirstOrDefaultAsync();
         }
 
+        public async Task<bool> CityExistsAsync(int cityId)
+        {
+            return await _context.Cities.AnyAsync(c => c.Id == cityId);
+        }
+
         public async Task<PointOfInterest?> GetPointOfInterestForCityAsync(
             int cityId,
             int pointOfInterestId)
@@ -56,9 +61,9 @@ namespace CityInfo.API.Services
             return await _context.PointsOfInterests.Where(p => p.CityId == cityId).ToListAsync();
         }
 
-        public Task<bool> SaveChangesAsync()
+        public async Task<bool> SaveChangesAsync()
         {
-            throw new NotImplementedException();
+            return (await _context.SaveChangesAsync() >= 0);
         }
     }
 }
