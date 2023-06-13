@@ -7,13 +7,15 @@
 
         public LocalMailService(IConfiguration configuration)
         {
-            _mailTo = configuration["mailSetting:mailToAdress"];
-            _mailFrom = configuration["mailSetting:mailFromAdress"];
+            _mailTo = configuration["mailSettings:mailToAddress"];
+            _mailFrom = configuration["mailSettings:mailFromAddress"];
         }
+
         public void Send(string subject, string message)
         {
-            //send mail - output to the console
-            Console.WriteLine($"Mail from {_mailFrom} to {_mailTo}, " + $"with {nameof(LocalMailService)}");
+            // send mail - output to console window
+            Console.WriteLine($"Mail from {_mailFrom} to {_mailTo}, " +
+                $"with {nameof(LocalMailService)}.");
             Console.WriteLine($"Subject: {subject}");
             Console.WriteLine($"Message: {message}");
         }

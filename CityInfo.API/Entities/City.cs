@@ -10,16 +10,18 @@ namespace CityInfo.API.Entities
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(200)]
+        [MaxLength(50)]
         public string Name { get; set; }
+
+        [MaxLength(200)]
         public string? Description { get; set; }
 
-        public ICollection<PointOfInterest> PointsOfInterest { get; set; } = new List<PointOfInterest>();
+        public ICollection<PointOfInterest> PointsOfInterest { get; set; }
+               = new List<PointOfInterest>();
 
         public City(string name)
         {
             Name = name;
         }
-
     }
 }

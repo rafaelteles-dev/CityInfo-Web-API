@@ -6,27 +6,23 @@ namespace CityInfo.API.DbContexts
     public class CityInfoContext : DbContext
     {
         public DbSet<City> Cities { get; set; } = null!;
-        public DbSet<PointOfInterest> PointsOfInterests { get; set; } = null!;
+        public DbSet<PointOfInterest> PointsOfInterest { get; set; } = null!;
 
-        public CityInfoContext(DbContextOptions<CityInfoContext> options): base(options)
+        public CityInfoContext(DbContextOptions<CityInfoContext> options) 
+            : base(options) 
         {
 
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlite("connectionstring");
-        //    base.OnConfiguring(optionsBuilder);
-        //}
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<City>().HasData(
-                new City("New York City")
-                {
-                    Id = 1,
-                    Description = "The one with that big park."
-                },
+            modelBuilder.Entity<City>()
+                .HasData(
+               new City("New York City")
+               {
+                   Id = 1,
+                   Description = "The one with that big park."
+               },
                new City("Antwerp")
                {
                    Id = 2,
@@ -75,10 +71,15 @@ namespace CityInfo.API.DbContexts
                    Id = 6,
                    CityId = 3,
                    Description = "The world's largest museum."
-               });
-
+               }
+               );
             base.OnModelCreating(modelBuilder);
-
         }
+
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlite("connectionstring");
+        //    base.OnConfiguring(optionsBuilder);
+        //}
     }
 }
